@@ -35,13 +35,13 @@ struct FreePostView: View {
                     DatePicker("日付を選択", selection: $selectedDate, displayedComponents: .date)
                 }
                 
-                Button(action: {
-                    let newChallenge = ChallengeModel(title: title, image: image, description: description, date: selectedDate,
-                                                      username: username,userImage:userImage,openMindScore: 0)
-                  
-                }) {
-                    Text("チャレンジを作成")
-                }
+//                Button(action: {
+//                    let newChallenge = ChallengeModel(id: title, title: description, description: image, image: selectedDate,
+//                                                      userImage: username,username:userImage,date: 0, openMindScore: )
+//                  
+//                }) {
+//                    Text("チャレンジを作成")
+//                }
             }
             .navigationTitle("フリーチャレンジ！")
         }

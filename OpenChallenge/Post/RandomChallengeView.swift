@@ -10,7 +10,7 @@ import SwiftUI
 struct RandomChallengeView: View {
     // Sample challenge data
     let challenges = [
-        "急に友達に料理を振る舞う",
+        "友達に料理を振る舞う",
         "困っている人を助ける",
         "朝6時に公園でランニング",
         "会社・学校で、バレないようにモノマネをする",

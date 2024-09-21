@@ -6,83 +6,53 @@
 //
 
 import SwiftUI
+import Firebase
+
+class ChallengeViewModel: ObservableObject {
+    @Published var challenges: [ChallengeModel] = []
+    
+    private var db = Firestore.firestore()
+    
+    func fetchChallenges() {
+        db.collection("Challenge").getDocuments { (querySnapshot, error) in
+            if let error = error {
+                print("Error getting documents: \(error)")
+            } else {
+                for document in querySnapshot!.documents {
+                    let data = document.data()
+                    
+                    // Manually extract each field
+                    let id = document.documentID
+                    let title = data["title"] as? String ?? ""
+                    let image = data["image"] as? String ?? ""
+                    let description = data["description"] as? String ?? ""
+                    let timestamp = data["date"] as? Timestamp ?? Timestamp(date: Date())
+                    let date = timestamp.dateValue()
+                    let username = data["username"] as? String ?? ""
+                    let userImage = data["userImage"] as? String ?? ""
+                    let openMindScore = data["openMindScore"] as? Int ?? 0
+                    
+                    // Create ChallengeModel object and append it to the array
+                    let challenge = ChallengeModel(id: id, title: title, image: image, description: description, date: date, username: username, userImage: userImage, openMindScore: openMindScore)
+                    
+                    DispatchQueue.main.async {
+                        self.challenges.append(challenge)
+                    }
+                }
+            }
+        }
+    }
+}
 
 struct HomeView: View {
-    @State private var challenges: [ChallengeModel] = posCallenges // 仮データを使用
+    @ObservedObject var viewModel = ChallengeViewModel()
     @State private var showCreateChallenge = false
     
     var body: some View {
         NavigationView {
             ScrollView {
-                ForEach(challenges) { challenge in
-                    VStack(alignment: .leading, spacing: 16) {
-                        // Checking if the UIImage exists
-                        if let uiImage = UIImage(named: challenge.image) {
-                            Image(uiImage: uiImage)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(maxWidth: .infinity, minHeight: 200)
-                                .clipped()
-                                .cornerRadius(12)
-                                .shadow(radius: 5)
-                        } else {
-                            // Fall-back system image if the asset is missing
-                            Image(systemName: "photo")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(maxWidth: .infinity, minHeight: 200)
-                                .foregroundColor(.gray)
-                                .background(Color(.systemGray6))
-                                .cornerRadius(12)
-                                .shadow(radius: 5)
-                        }
-                        
-                        Text(challenge.title)
-                            .font(.title)
-                            .fontWeight(.semibold)
-                            .foregroundColor(.primary)
-                        
-                        // ユーザー情報
-                        HStack(spacing: 8) {
-                            Image(challenge.userImage)
-                                .resizable()
-                                .scaledToFill() // 画像をフレームにフィットさせる
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.gray, lineWidth: 1))
-                            
-                            Text(challenge.username)
-                                .font(.title2)
-                                .fontWeight(.medium)
-                                .foregroundColor(.primary)
-                        }
-                        
-                        Text(challenge.description)
-                            .font(.body)
-                            .foregroundColor(.secondary)
-                            .padding(.top, 4)
-                        
-                        // OpenMindScore display
-                        HStack {
-                            Text("Open Mind Score:")
-                                .font(.subheadline)
-                                .foregroundColor(.secondary)
-                            Text("\(challenge.openMindScore)")
-                                .font(.headline)
-                                .foregroundColor(.blue) // Highlight the score
-                        }
-                        
-                        Text("チャレンジ日: \(challenge.date, style: .date)")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(16)
-                    .shadow(radius: 5)
-                    .padding(.horizontal)
+                ForEach(viewModel.challenges) { challenge in
+                    PostView(challenge: challenge) // Call PostView for each challenge
                 }
             }
             .navigationTitle("チャレンジリスト")
@@ -98,12 +68,17 @@ struct HomeView: View {
                 }
             }
             .sheet(isPresented: $showCreateChallenge) {
-                PostSelectView()
+                // Pass challenges to PostSelectView
+                PostSelectView(challenges: $viewModel.challenges)
             }
             .background(Color(.systemGroupedBackground))
+            .onAppear {
+                viewModel.fetchChallenges()
+            }
         }
     }
 }
+
 #Preview {
     HomeView()
 }

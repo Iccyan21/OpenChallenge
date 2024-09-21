@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		47D82C822C9F399F000FE0EC /* FirebaseDatabase in Frameworks */ = {isa = PBXBuildFile; productRef = 47D82C812C9F399F000FE0EC /* FirebaseDatabase */; };
+		47D82C842C9F399F000FE0EC /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 47D82C832C9F399F000FE0EC /* FirebaseFirestore */; };
+		47D82C862C9F399F000FE0EC /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 47D82C852C9F399F000FE0EC /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		47D82C192C9ECFB4000FE0EC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +58,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47D82C822C9F399F000FE0EC /* FirebaseDatabase in Frameworks */,
+				47D82C842C9F399F000FE0EC /* FirebaseFirestore in Frameworks */,
+				47D82C862C9F399F000FE0EC /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +87,7 @@
 				47D82C0A2C9ECFB1000FE0EC /* OpenChallenge */,
 				47D82C1B2C9ECFB4000FE0EC /* OpenChallengeTests */,
 				47D82C252C9ECFB4000FE0EC /* OpenChallengeUITests */,
+				47D82C872C9F39D7000FE0EC /* Frameworks */,
 				47D82C092C9ECFB1000FE0EC /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +100,13 @@
 				47D82C222C9ECFB4000FE0EC /* OpenChallengeUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		47D82C872C9F39D7000FE0EC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +129,9 @@
 			);
 			name = OpenChallenge;
 			packageProductDependencies = (
+				47D82C812C9F399F000FE0EC /* FirebaseDatabase */,
+				47D82C832C9F399F000FE0EC /* FirebaseFirestore */,
+				47D82C852C9F399F000FE0EC /* FirebaseStorage */,
 			);
 			productName = OpenChallenge;
 			productReference = 47D82C082C9ECFB1000FE0EC /* OpenChallenge.app */;
@@ -195,6 +215,9 @@
 			);
 			mainGroup = 47D82BFF2C9ECFB1000FE0EC;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				47D82C802C9F399F000FE0EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 47D82C092C9ECFB1000FE0EC /* Products */;
 			projectDirPath = "";
@@ -558,6 +581,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		47D82C802C9F399F000FE0EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.2.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		47D82C812C9F399F000FE0EC /* FirebaseDatabase */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47D82C802C9F399F000FE0EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseDatabase;
+		};
+		47D82C832C9F399F000FE0EC /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47D82C802C9F399F000FE0EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		47D82C852C9F399F000FE0EC /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 47D82C802C9F399F000FE0EC /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 47D82C002C9ECFB1000FE0EC /* Project object */;
 }
