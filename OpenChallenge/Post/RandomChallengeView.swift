@@ -19,6 +19,7 @@ struct RandomChallengeView: View {
     
     // State to store the selected challenge
     @State private var selectedChallenge: String = "スタートボタンを押して、お題を決めましょう"
+    @State private var isStarted: Bool = false
     
     var body: some View {
         VStack(spacing: 40) {
@@ -46,29 +47,31 @@ struct RandomChallengeView: View {
             Spacer()
             
             // "Start" Button to randomize the challenge
-            Button(action: {
-                selectedChallenge = challenges.randomElement() ?? "お題がありません"
-            }) {
-                Text("スタート")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .frame(width: 200, height: 50)
-                    .background(Color.blue)
-                    .cornerRadius(12)
-                    .shadow(radius: 5)
+            if isStarted == false{
+                Button(action: {
+                    selectedChallenge = challenges.randomElement() ?? "お題がありません"
+                    isStarted.toggle()
+                }) {
+                    Text("スタート")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(width: 200, height: 50)
+                        .background(Color.blue)
+                        .cornerRadius(12)
+                        .shadow(radius: 5)
+                }
             }
             
             // "Next" Button to proceed (only visible if a challenge has been selected)
             if selectedChallenge != "スタートボタンを押して、お題を決めましょう" {
-                NavigationLink(destination: NextView()) {
+                NavigationLink(destination: HomeView()) {
                     Text("さあチャレンジ！")
                         .font(.headline)
                         .foregroundColor(.white)
                         .frame(width: 200, height: 50)
-                        .background(Color.gray.opacity(0.7))
+                        .background(Color.green)
                         .cornerRadius(12)
                         .shadow(radius: 5)
-                        .padding(.top, 20)
                 }
             }
             
